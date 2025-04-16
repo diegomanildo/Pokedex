@@ -1,0 +1,10 @@
+body {
+  margin: 0;
+  background: #121212;
+  color: #e0e0e0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  color: #fff !important;
+  height: 100%;
+}
