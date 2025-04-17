@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Loading from "../common/Loading";
 import "./Landing.css";
@@ -9,11 +9,11 @@ import {
   getGenerationData,
 } from "../utils/utils";
 import Select from "../common/Select";
-import Sprite from "../common/Sprite";
+import PokemonList from "./Landing/PokemonList";
+import BackButton from "./Landing/BackButton";
+import NextButton from "./Landing/NextButton";
 
 export default function Landing() {
-  const pokemonContainerRef = useRef(null);
-
   const pokemons = 1025;
   const pokemonsPerPage = 32;
 
@@ -53,6 +53,7 @@ export default function Landing() {
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     const filteredList = filterPokemons(
       allPokemon,
       search,
@@ -61,6 +62,7 @@ export default function Landing() {
       generationData
     );
     setFiltered(filteredList);
+    setLoading(false);
   }, [allPokemon, search, type, generation, generationData]);
 
   const currentPokemons = filtered.slice(
@@ -111,31 +113,61 @@ export default function Landing() {
     return <Loading />;
   }
 
-  const SearchBarForm = () => (
-    <form className="form" onSubmit={(e) => e.preventDefault()}>
-      <div className="d-flex justify-content-center gap-2 mb-3">
-        <input
-          type="text"
-          className="form-control w-50"
-          placeholder="Search Pokemon..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+  const MovePageButtons = () => {
+    return totalPages <= 0 ? null : (
+      <div className="pagination d-flex justify-content-center mt-4">
+        <BackButton currentPage={currentPage} setCurrentPage={setCurrentPage} />
+
+        <span className="m-2">
+          Page {currentPage} of {totalPages}
+        </span>
+
+        <NextButton
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
         />
-
-        <button
-          className="btn btn-danger"
-          onClick={() => {
-            setSearch("");
-            setType("");
-            setGeneration("");
-            setCurrentPage(1);
-            localStorage.clear();
-          }}
-        >
-          Reset Filters
-        </button>
       </div>
+    );
+  };
 
+  const Filters = () => {
+    const types = [
+      "All Types",
+      "Normal",
+      "Fire",
+      "Water",
+      "Grass",
+      "Electric",
+      "Ice",
+      "Fighting",
+      "Poison",
+      "Ground",
+      "Flying",
+      "Psychic",
+      "Bug",
+      "Rock",
+      "Ghost",
+      "Dragon",
+      "Dark",
+      "Steel",
+      "Fairy",
+    ];
+
+    const generations = [
+      "All generations",
+      "generation-i",
+      "generation-ii",
+      "generation-iii",
+      "generation-iv",
+      "generation-v",
+      "generation-vi",
+      "generation-vii",
+      "generation-viii",
+      "generation-ix",
+    ];
+
+    return (
       <div className="d-flex justify-content-center gap-2 mb-3 flex-wrap">
         <Select
           value={type}
@@ -143,27 +175,7 @@ export default function Landing() {
             setType(e.target.value);
             setCurrentPage(1);
           }}
-          options={[
-            "All Types",
-            "Normal",
-            "Fire",
-            "Water",
-            "Grass",
-            "Electric",
-            "Ice",
-            "Fighting",
-            "Poison",
-            "Ground",
-            "Flying",
-            "Psychic",
-            "Bug",
-            "Rock",
-            "Ghost",
-            "Dragon",
-            "Dark",
-            "Steel",
-            "Fairy",
-          ]}
+          options={types}
         />
 
         <Select
@@ -172,97 +184,51 @@ export default function Landing() {
             setGeneration(e.target.value);
             setCurrentPage(1);
           }}
-          options={[
-            "All generations",
-            "generation-i",
-            "generation-ii",
-            "generation-iii",
-            "generation-iv",
-            "generation-v",
-            "generation-vi",
-            "generation-vii",
-            "generation-viii",
-            "generation-ix",
-          ]}
+          options={generations}
         />
-      </div>
-    </form>
-  );
-
-  const Button = ({ onClick, disabled, children }) => (
-    <button className="btn btn-secondary" onClick={onClick} disabled={disabled}>
-      {children}
-    </button>
-  );
-
-  const BackButton = () => (
-    <Button
-      onClick={() => {
-        if (currentPage > 1) {
-          setCurrentPage(currentPage - 1);
-        }
-      }}
-      disabled={currentPage === 1}
-    >
-      Back
-    </Button>
-  );
-
-  const NextButton = () => (
-    <Button
-      onClick={() => {
-        if (currentPage < totalPages) {
-          setCurrentPage(currentPage + 1);
-        }
-      }}
-      disabled={currentPage === totalPages}
-    >
-      Next
-    </Button>
-  );
-
-  const MovePageButtons = () => {
-    return totalPages <= 0 ? null : (
-      <div className="pagination d-flex justify-content-center mt-4">
-        <BackButton />
-
-        <span className="m-2">
-          Page {currentPage} of {totalPages}
-        </span>
-
-        <NextButton />
       </div>
     );
   };
 
-  const SearchBar = () => (
-    <header className="text-center mb-4">
-      <Link to="/">
-        <img className="m-3" src={icon} width={40} />
-      </Link>
-      <SearchBarForm />
-      <MovePageButtons />
-    </header>
-  );
-
-  const PokemonList = () => {
-    return currentPokemons.map(pokemon => (
-      <div
-        className="pokemon-card d-flex align-items-center justify-content-center m-2"
-        key={pokemon.name}
-      >
-        <Link to={`/pokemon/${pokemon.name}`}>
-          <Sprite pokemon={pokemon} size={100} />
-        </Link>
-      </div>
-    ))
-  };
-
   return (
     <div className="container">
-      <SearchBar />
-      <div ref={pokemonContainerRef} className="container d-flex flex-wrap justify-content-center">
-        <PokemonList />
+      <header className="text-center mb-4">
+        <Link to="/">
+          <img className="m-3" src={icon} width={40} />
+        </Link>
+        <form className="form" onSubmit={(e) => e.preventDefault()}>
+          <div className="d-flex justify-content-center gap-2 mb-3">
+            <input
+              type="text"
+              className="form-control w-50"
+              placeholder="Search Pokemon..."
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setCurrentPage(1);
+              }}
+            />
+
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                setSearch("");
+                setType("");
+                setGeneration("");
+                setCurrentPage(1);
+                localStorage.clear();
+              }}
+            >
+              Reset Filters
+            </button>
+          </div>
+
+          <Filters />
+        </form>
+        <MovePageButtons />
+      </header>
+      <div className="container d-flex flex-wrap justify-content-center">
+        <PokemonList pokemons={currentPokemons} />
       </div>
     </div>
   );

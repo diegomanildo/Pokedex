@@ -8,6 +8,7 @@ import {
 import {
   IconArrowBigRightLinesFilled,
   IconArrowNarrowLeftDashed,
+  IconPlayerPlayFilled,
 } from "@tabler/icons-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./Pokemon.css";
@@ -76,21 +77,64 @@ function Pokemon() {
           <button className="btn btn-secondary" onClick={() => navigate("/")}>
             <IconArrowNarrowLeftDashed stroke={2} />
           </button>
-          <div />
-        </div>
-        <div className="col-12 d-flex justify-content-end mt-2">
-          <input
-            className="form-check-input me-2"
-            type="checkbox"
-            checked={showShiny}
-            onChange={() => {
-              setShowShiny(!showShiny);
-            }}
-          />
-          <p className="mb-0">Shiny sprites</p>
         </div>
       </div>
+      
+      <div className="col-12 d-flex justify-content-end mt-2">
+        <input
+          className="form-check-input me-2"
+          type="checkbox"
+          checked={showShiny}
+          onChange={() => {
+            setShowShiny(!showShiny);
+          }}
+        />
+        <p className="mb-0">Shiny sprites</p>
+      </div>
     </header>
+  );
+
+  const PokemonCry = () => {
+    const CryButton = ({ children, audio }) => (
+      <div className="container">
+        <button
+          className="btn btn-secondary"
+          onClick={() => {
+            const cry = new Audio(audio);
+            cry.volume = 0.2;
+            cry.play();
+          }}
+        >
+          <IconPlayerPlayFilled stroke={2} />
+        </button>
+
+        <p>Play {children}</p>
+      </div>
+    );
+
+    return (
+      <div className="container">
+        {pokemon.cries.legacy && (
+          <CryButton audio={pokemon.cries.legacy}>Legacy Cry</CryButton>
+        )}
+        {pokemon.cries.latest && (
+          <CryButton audio={pokemon.cries.latest}>Latest</CryButton>
+        )}
+      </div>
+    );
+  };
+
+  const PokemonBasics = () => (
+    <div className="card p-4 mt-3 w-100 text-center shadow">
+      <div className="d-flex flex-column align-items-center">
+        <h1 className="mb-2 text-capitalize">
+          {pokemon.name} #{pokemon.id}
+        </h1>
+        <div className="d-flex align-items-center gap-3">
+          <Sprite pokemon={pokemon} showShiny={showShiny} size="150px" />
+        </div>
+      </div>
+    </div>
   );
 
   const Types = () => (
@@ -185,14 +229,7 @@ function Pokemon() {
       ) : (
         <div className="d-flex flex-column align-items-center">
           <Header />
-          <div className="card p-4 mt-3 w-100 text-center shadow">
-            <div className="d-flex align-items-center justify-content-center gap-4 flex-wrap">
-              <h1 className="mb-0 text-capitalize">
-                {pokemon.name} #{pokemon.id}
-                <Sprite pokemon={pokemon} showShiny={showShiny} size="150px" />
-              </h1>
-            </div>
-          </div>
+          <PokemonBasics />
           <div className="card p-4 mt-4 w-100 shadow">
             <Types />
           </div>
