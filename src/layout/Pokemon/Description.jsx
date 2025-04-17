@@ -4,11 +4,11 @@ import Cry from "./Cry";
 import Type from "../../common/Type";
 
 const Types = ({ pokemonTypes }) => (
-  <section>
+  <section className="mt-3">
     <h2 className="text-start">Types</h2>
     <div className="col">
       {pokemonTypes.map((slot) => (
-        <Type name={slot.type.name} />
+        <Type key={slot.slot} name={slot.type.name} />
       ))}
     </div>
   </section>
@@ -20,13 +20,16 @@ const Description = ({ pokemon, showShiny }) => (
       <h1 className="mb-2 text-capitalize">
         {pokemon.name.replace("-", " ")} #{pokemon.id}
       </h1>
-      <div className="d-flex align-items-center gap-3">
-        <Sprite pokemon={pokemon} showShiny={showShiny} size="150px" />
-        <Cry cries={pokemon.cries} />
-      </div>
+
+      <Sprite pokemon={pokemon} showShiny={showShiny} size="150px" />
     </div>
 
     <Types pokemonTypes={pokemon.types} />
+
+    <section className="mt-4">
+      <h2 className="text-start">Cries</h2>
+      <Cry cries={pokemon.cries} />
+    </section>
   </div>
 );
 

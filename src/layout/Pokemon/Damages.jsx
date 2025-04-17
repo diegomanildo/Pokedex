@@ -1,10 +1,10 @@
-import React from 'react'
-import Type from '../../common/Type';
+import React from "react";
+import Type from "../../common/Type";
+import FoldableCard from "../../common/FoldableCard";
 
 const Damages = ({ damageRelations }) => {
   return Object.keys(damageRelations).length === 0 ? null : (
-    <section className="card p-4 mt-4 w-100 shadow">
-      <h2>Damages</h2>
+    <FoldableCard title="Damages">
       <table cellPadding="4">
         <thead>
           <tr>
@@ -29,8 +29,8 @@ const Damages = ({ damageRelations }) => {
             ))}
         </tbody>
       </table>
-    </section>
+    </FoldableCard>
   );
 };
 
-export default Damages
+export default Damages;

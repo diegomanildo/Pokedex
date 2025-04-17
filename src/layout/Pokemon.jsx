@@ -88,7 +88,6 @@ function Pokemon() {
           />
 
           <Description pokemon={pokemon} showShiny={showShiny} />
-          <Types pokemonTypes={pokemon.types} />
           <Damages damageRelations={damageRelations} />
           <Evolutions evolutionChain={evolutionChain} showShiny={showShiny} />
           <Stats pokemonStats={pokemon.stats} />

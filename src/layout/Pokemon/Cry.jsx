@@ -12,7 +12,7 @@ const CryButton = ({ label, audio }) => (
       }}
       title={`Play ${label}`}
       style={{
-        backgroundColor: "#1e1e29",
+        backgroundColor: "#3a3a3a",
         color: "#e0e0e0",
         transition: "transform 0.05s ease, background-color 0.3s ease",
         boxShadow: "0 2px 6px rgba(0,0,0,0.3)",
@@ -20,8 +20,8 @@ const CryButton = ({ label, audio }) => (
       onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.95)")}
       onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
       onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#3a3a3a")}
-      onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#2c2c2c")}
+      // onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#3a3a3a")}
+      // onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#2c2c2c")}
     >
       <IconPlayerPlayFilled stroke={2} size={28} />
     </button>
