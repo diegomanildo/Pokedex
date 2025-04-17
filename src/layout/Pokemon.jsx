@@ -7,13 +7,12 @@ import {
 import { useParams } from "react-router-dom";
 import "./Pokemon.css";
 import Loading from "../common/Loading";
-import Sprite from "../common/Sprite";
 import Types from "./Pokemon/Types";
 import Stats from "./Pokemon/Stats";
 import Evolutions from "./Pokemon/Evolutions";
 import Damages from "./Pokemon/Damages";
-import Cry from "./Pokemon/Cry";
 import Header from "./Pokemon/Header";
+import Description from "./Pokemon/Description";
 
 function Pokemon() {
   const { name } = useParams();
@@ -81,20 +80,6 @@ function Pokemon() {
     </div>
   );
 
-  const PokemonBasics = () => (
-    <div className="card p-4 mt-3 w-100 text-center shadow">
-      <div className="d-flex flex-column align-items-center">
-        <h1 className="mb-2 text-capitalize">
-          {pokemon.name.replace("-", " ")} #{pokemon.id}
-        </h1>
-        <div className="d-flex align-items-center gap-3">
-          <Sprite pokemon={pokemon} showShiny={showShiny} size="150px" />
-          <Cry cries={pokemon.cries} />
-        </div>
-      </div>
-    </div>
-  );
-
   if (isLoading) {
     return <Loading />;
   }
@@ -105,20 +90,23 @@ function Pokemon() {
         <Error />
       ) : (
         <div className="d-flex flex-column align-items-center">
-          <Header forms={forms} pokemon={pokemon} setPokemon={setPokemon} showShiny={showShiny} setShowShiny={setShowShiny} />
-          <PokemonBasics />
-          <div className="card p-4 mt-4 w-100 shadow">
-            <Types pokemonTypes={pokemon.types} />
-          </div>
-          <div className="card p-4 mt-4 w-100 shadow">
-            <Damages damageRelations={damageRelations} />
-          </div>
+          <Header
+            forms={forms}
+            pokemon={pokemon}
+            setPokemon={setPokemon}
+            showShiny={showShiny}
+            setShowShiny={setShowShiny}
+          />
+
+          <Description pokemon={pokemon} showShiny={showShiny} />
+
+          <Types pokemonTypes={pokemon.types} />
+
+          <Damages damageRelations={damageRelations} />
 
           <Evolutions evolutionChain={evolutionChain} showShiny={showShiny} />
 
-          <div className="card p-4 mt-4 w-100 shadow">
-            <Stats pokemonStats={pokemon.stats} />
-          </div>
+          <Stats pokemonStats={pokemon.stats} />
         </div>
       )}
     </div>

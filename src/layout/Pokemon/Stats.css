@@ -1,0 +1,46 @@
+.stat-bar-container {
+  width: 50px;
+}
+
+.stat-bar-wrapper {
+  height: 150px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  background: #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.stat-bar {
+  width: 100%;
+  transition: height 0.3s ease;
+}
+
+.hp {
+  background-color: #ef4444;
+}
+
+.attack {
+  background-color: #f59e0b;
+}
+
+.defense {
+  background-color: #3b82f6;
+}
+
+.special-attack {
+  background-color: #a78bfa;
+}
+
+.special-defense {
+  background-color: #06b6d4;
+}
+
+.speed {
+  background-color: #9b9b9b;
+}
+
+.total {
+  background-color: #10b981;
+}

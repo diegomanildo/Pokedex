@@ -1,53 +1,58 @@
 import React from "react";
+import "./Stats.css";
+
+const formatStatName = (name) => {
+  switch (name) {
+    case "special-attack":
+      return "Sp. Atk";
+    case "special-defense":
+      return "Sp. Def";
+    default:
+      return name;
+  }
+};
+
+const StatBar = ({ name, value, max }) => (
+  <div className="stat-bar-container d-flex flex-column align-items-center">
+    <div className="stat-bar-wrapper">
+      <div
+        className={`stat-bar ${name}`}
+        style={{ height: `${(value / max) * 100}%` }}
+      />
+    </div>
+
+    <small className="mt-2 fw-bold">{value}</small>
+
+    <small
+      className="text-capitalize text-center"
+      style={{ fontSize: "12px", whiteSpace: "nowrap" }}
+    >
+      {formatStatName(name)}
+    </small>
+  </div>
+);
+
+const stats = 6;
+const maxBaseStat = 200;
+const totalStat = maxBaseStat * stats;
 
 const Stats = ({ pokemonStats }) => {
-  const maxBaseStat = 200;
-  const maxTotal = 800;
-
-  const totalStats = pokemonStats.reduce(
-    (total, stat) => total + stat.base_stat,
-    0
-  );
+  const total = pokemonStats.reduce((sum, stat) => sum + stat.base_stat, 0);
 
   return (
-    <section>
+    <section className="card p-4 mt-4 w-100 shadow">
       <h2>Stats</h2>
-      <div className="stats">
+      <div className="d-flex justify-content-center align-items-end gap-4 mt-4 flex-wrap">
         {pokemonStats.map((stat) => (
-          <div key={stat.stat.name} className="mb-2">
-            <strong className="text-capitalize">
-              {stat.stat.name.replace("-", " ")}:
-            </strong>
-            <div className="progress" style={{ height: "20px" }}>
-              <div
-                className="progress-bar bg-success"
-                role="progressbar"
-                style={{ width: `${(stat.base_stat / maxBaseStat) * 100}%` }}
-                aria-valuenow={stat.base_stat}
-                aria-valuemin="0"
-                aria-valuemax={maxBaseStat}
-              >
-                {stat.base_stat}
-              </div>
-            </div>
-          </div>
+          <StatBar
+            key={stat.stat.name}
+            name={stat.stat.name}
+            value={stat.base_stat}
+            max={maxBaseStat}
+          />
         ))}
 
-        <div className="mt-4">
-          <strong>Total:</strong>
-          <div className="progress mt-1" style={{ height: "24px" }}>
-            <div
-              className="progress-bar bg-info"
-              role="progressbar"
-              style={{ width: `${(totalStats / maxTotal) * 100}%` }}
-              aria-valuenow={totalStats}
-              aria-valuemin="0"
-              aria-valuemax={maxTotal}
-            >
-              {totalStats}
-            </div>
-          </div>
-        </div>
+        <StatBar name="total" value={total} max={totalStat} />
       </div>
     </section>
   );

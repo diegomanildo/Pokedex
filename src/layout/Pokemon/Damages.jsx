@@ -3,7 +3,7 @@ import Type from '../../common/Type';
 
 const Damages = ({ damageRelations }) => {
   return Object.keys(damageRelations).length === 0 ? null : (
-    <section>
+    <section className="card p-4 mt-4 w-100 shadow">
       <h2>Damages</h2>
       <table cellPadding="4">
         <thead>
