@@ -8,10 +8,10 @@ import {
   getAllPokemon,
   getGenerationData,
 } from "../utils/utils";
-import Select from "../common/Select";
 import PokemonList from "./Landing/PokemonList";
-import BackButton from "./Landing/BackButton";
-import NextButton from "./Landing/NextButton";
+import Error from "../common/Error";
+import Filters from "./Landing/Filters";
+import MovePageButtons from "./Landing/MovePageButtons";
 
 export default function Landing() {
   const pokemons = 1025;
@@ -31,6 +31,7 @@ export default function Landing() {
     const savedPage = parseInt(localStorage.getItem("currentPage"), 10);
     return isNaN(savedPage) ? 1 : savedPage;
   });
+  const [error, setError] = useState(null);
 
   // Filters
   const [type, setType] = useState(() => localStorage.getItem("type") || "");
@@ -47,6 +48,7 @@ export default function Landing() {
       getGenerationData().then(setGenerationData);
     } catch (e) {
       console.error(e);
+      setError(e.message || "Unknown error");
     } finally {
       setLoading(false);
     }
@@ -64,11 +66,6 @@ export default function Landing() {
     setFiltered(filteredList);
     setLoading(false);
   }, [allPokemon, search, type, generation, generationData]);
-
-  const currentPokemons = filtered.slice(
-    currentPage * pokemonsPerPage - pokemonsPerPage,
-    currentPage * pokemonsPerPage
-  );
   const totalPages = Math.ceil(filtered.length / pokemonsPerPage);
 
   useEffect(() => {
@@ -113,82 +110,14 @@ export default function Landing() {
     return <Loading />;
   }
 
-  const MovePageButtons = () => {
-    return totalPages <= 0 ? null : (
-      <div className="pagination d-flex justify-content-center mt-4">
-        <BackButton currentPage={currentPage} setCurrentPage={setCurrentPage} />
+  if (error) {
+    return <Error error={error} />
+  }
 
-        <span className="m-2">
-          Page {currentPage} of {totalPages}
-        </span>
-
-        <NextButton
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
-        />
-      </div>
-    );
-  };
-
-  const Filters = () => {
-    const types = [
-      "All Types",
-      "Normal",
-      "Fire",
-      "Water",
-      "Grass",
-      "Electric",
-      "Ice",
-      "Fighting",
-      "Poison",
-      "Ground",
-      "Flying",
-      "Psychic",
-      "Bug",
-      "Rock",
-      "Ghost",
-      "Dragon",
-      "Dark",
-      "Steel",
-      "Fairy",
-    ];
-
-    const generations = [
-      "All generations",
-      "generation-i",
-      "generation-ii",
-      "generation-iii",
-      "generation-iv",
-      "generation-v",
-      "generation-vi",
-      "generation-vii",
-      "generation-viii",
-      "generation-ix",
-    ];
-
-    return (
-      <div className="d-flex justify-content-center gap-2 mb-3 flex-wrap">
-        <Select
-          value={type}
-          onChange={(e) => {
-            setType(e.target.value);
-            setCurrentPage(1);
-          }}
-          options={types}
-        />
-
-        <Select
-          value={generation}
-          onChange={(e) => {
-            setGeneration(e.target.value);
-            setCurrentPage(1);
-          }}
-          options={generations}
-        />
-      </div>
-    );
-  };
+  const currentPokemons = filtered.slice(
+    currentPage * pokemonsPerPage - pokemonsPerPage,
+    currentPage * pokemonsPerPage
+  );
 
   return (
     <div className="container">
@@ -196,6 +125,7 @@ export default function Landing() {
         <Link to="/">
           <img className="m-3" src={icon} width={40} />
         </Link>
+        
         <form className="form" onSubmit={(e) => e.preventDefault()}>
           <div className="d-flex justify-content-center gap-2 mb-3">
             <input
@@ -223,10 +153,11 @@ export default function Landing() {
             </button>
           </div>
 
-          <Filters />
+          <Filters type={type} setType={setType} generation={generation} setGeneration={setGeneration} setCurrentPage={setCurrentPage} />
         </form>
-        <MovePageButtons />
+        <MovePageButtons currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
       </header>
+
       <div className="container d-flex flex-wrap justify-content-center">
         <PokemonList pokemons={currentPokemons} />
       </div>

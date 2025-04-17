@@ -1,0 +1,12 @@
+.pagination button {
+  background-color: #3e3e55;
+  color: #fff;
+}
+
+.pagination button:hover {
+  background-color: #2e2e3b;
+}
+
+.pagination button:disabled {
+  background-color: #202029;
+}

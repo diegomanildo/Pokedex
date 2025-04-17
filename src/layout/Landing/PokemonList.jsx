@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Sprite from "../../common/Sprite";
+import "./PokemonList.css"
 
 function PokemonList({ pokemons }) {
   return pokemons.map((pokemon) => (

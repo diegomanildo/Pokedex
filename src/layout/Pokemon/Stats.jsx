@@ -32,9 +32,9 @@ const StatBar = ({ name, value, max }) => (
   </div>
 );
 
-const stats = 6;
-const maxBaseStat = 200;
-const totalStat = maxBaseStat * stats;
+const STATS = 6;
+const MAX_BASE_STAT = 200;
+const MAX_TOTAL_STAT = MAX_BASE_STAT * STATS;
 
 const Stats = ({ pokemonStats }) => {
   const total = pokemonStats.reduce((sum, stat) => sum + stat.base_stat, 0);
@@ -43,16 +43,18 @@ const Stats = ({ pokemonStats }) => {
     <section className="card p-4 mt-4 w-100 shadow">
       <h2>Stats</h2>
       <div className="d-flex justify-content-center align-items-end gap-4 mt-4 flex-wrap">
+        {/* Stats */}
         {pokemonStats.map((stat) => (
           <StatBar
             key={stat.stat.name}
             name={stat.stat.name}
             value={stat.base_stat}
-            max={maxBaseStat}
+            max={MAX_BASE_STAT}
           />
         ))}
 
-        <StatBar name="total" value={total} max={totalStat} />
+        {/* Total */}
+        <StatBar name="total" value={total} max={MAX_TOTAL_STAT} />
       </div>
     </section>
   );

@@ -13,6 +13,7 @@ import Evolutions from "./Pokemon/Evolutions";
 import Damages from "./Pokemon/Damages";
 import Header from "./Pokemon/Header";
 import Description from "./Pokemon/Description";
+import Error from "../common/Error";
 
 function Pokemon() {
   const { name } = useParams();
@@ -67,19 +68,6 @@ function Pokemon() {
     fetchAllData();
   }, [name]);
 
-  const Error = () => (
-    <div className="d-flex justify-content-center align-items-center vh-100">
-      <div className="text-center">
-        <h2 className="error" style={{ color: "#ff6b6b" }}>
-          Error: {error}
-        </h2>
-        <small className="error h6 fw-normal">
-          There was an issue loading the Pokémon data. Please try again later.
-        </small>
-      </div>
-    </div>
-  );
-
   if (isLoading) {
     return <Loading />;
   }
@@ -87,7 +75,7 @@ function Pokemon() {
   return (
     <div className="pokemon container py-4">
       {error ? (
-        <Error />
+        <Error error={error} />
       ) : (
         <div className="d-flex flex-column align-items-center">
           <Header
@@ -99,13 +87,9 @@ function Pokemon() {
           />
 
           <Description pokemon={pokemon} showShiny={showShiny} />
-
           <Types pokemonTypes={pokemon.types} />
-
           <Damages damageRelations={damageRelations} />
-
           <Evolutions evolutionChain={evolutionChain} showShiny={showShiny} />
-
           <Stats pokemonStats={pokemon.stats} />
         </div>
       )}
