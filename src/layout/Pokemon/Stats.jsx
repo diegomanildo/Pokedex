@@ -1,5 +1,6 @@
 import React from "react";
 import "./Stats.css";
+import FoldableCard from "../../common/FoldableCard";
 
 const formatStatName = (name) => {
   switch (name) {
@@ -40,8 +41,7 @@ const Stats = ({ pokemonStats }) => {
   const total = pokemonStats.reduce((sum, stat) => sum + stat.base_stat, 0);
 
   return (
-    <section className="card p-4 mt-4 w-100 shadow">
-      <h2>Stats</h2>
+    <FoldableCard title="Stats" className="card p-4 mt-4 w-100 shadow">
       <div className="d-flex justify-content-center align-items-end gap-4 mt-4 flex-wrap">
         {/* Stats */}
         {pokemonStats.map((stat) => (
@@ -56,7 +56,7 @@ const Stats = ({ pokemonStats }) => {
         {/* Total */}
         <StatBar name="total" value={total} max={MAX_TOTAL_STAT} />
       </div>
-    </section>
+    </FoldableCard>
   );
 };
 

@@ -14,6 +14,7 @@ import Damages from "./Pokemon/Damages";
 import Header from "./Pokemon/Header";
 import Description from "./Pokemon/Description";
 import Error from "../common/Error";
+import Movements from "./Pokemon/Movements";
 
 function Pokemon() {
   const { name } = useParams();
@@ -91,6 +92,7 @@ function Pokemon() {
           <Damages damageRelations={damageRelations} />
           <Evolutions evolutionChain={evolutionChain} showShiny={showShiny} />
           <Stats pokemonStats={pokemon.stats} />
+          <Movements moves={pokemon.moves} />
         </div>
       )}
     </div>

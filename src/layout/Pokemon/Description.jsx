@@ -1,6 +1,18 @@
 import React from "react";
 import Sprite from "../../common/Sprite";
 import Cry from "./Cry";
+import Type from "../../common/Type";
+
+const Types = ({ pokemonTypes }) => (
+  <section>
+    <h2 className="text-start">Types</h2>
+    <div className="col">
+      {pokemonTypes.map((slot) => (
+        <Type name={slot.type.name} />
+      ))}
+    </div>
+  </section>
+);
 
 const Description = ({ pokemon, showShiny }) => (
   <div className="card p-4 mt-3 w-100 text-center shadow">
@@ -13,6 +25,8 @@ const Description = ({ pokemon, showShiny }) => (
         <Cry cries={pokemon.cries} />
       </div>
     </div>
+
+    <Types pokemonTypes={pokemon.types} />
   </div>
 );
 

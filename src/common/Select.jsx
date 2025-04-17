@@ -1,8 +1,9 @@
 import React from "react";
+import "./Select.css"
 
 function Select({ value, onChange, options }) {
   return (
-    <select value={value} onChange={onChange} className="form-select w-auto">
+    <select className="form-select w-auto" value={value} onChange={onChange}>
       {options.map((opt) => {
         const isString = typeof opt === "string";
         const optionValue = isString ? (opt === options[0] ? "" : opt) : opt.value;
