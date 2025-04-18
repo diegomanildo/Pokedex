@@ -1,14 +1,14 @@
 import React from "react";
-import Sprite from "../../common/Sprite";
+import Sprite from "../../../common/Sprite";
 import Cry from "./Cry";
-import Type from "../../common/Type";
+import TypeIcon from "../../../common/TypeIcon";
 
 const Types = ({ pokemonTypes }) => (
   <section className="mt-3">
     <h2 className="text-start">Types</h2>
     <div className="col">
       {pokemonTypes.map((slot) => (
-        <Type key={slot.slot} name={slot.type.name} />
+        <TypeIcon key={slot.slot} name={slot.type.name} />
       ))}
     </div>
   </section>

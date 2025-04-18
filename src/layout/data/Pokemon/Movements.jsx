@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Type from "../../common/Type";
-import FoldableCard from "../../common/FoldableCard";
+import FoldableCard from "../../../common/FoldableCard";
+import TypeIcon from "../../../common/TypeIcon";
 
 const Movements = ({ moves }) => {
   const [movesWithTypes, setMovesWithTypes] = useState([]);
@@ -9,11 +9,11 @@ const Movements = ({ moves }) => {
     const fetchMoves = async () => {
       try {
         const detailedMoves = await Promise.all(
-          moves.map(async (move) => {
-            const res = await fetch(move.move.url);
+          moves.map(async (slot) => {
+            const res = await fetch(slot.move.url);
             const data = await res.json();
             return {
-              ...move,
+              ...slot,
               type: data.type.name,
             };
           })
@@ -46,13 +46,13 @@ const Movements = ({ moves }) => {
           </tr>
         </thead>
         <tbody>
-          {movesWithTypes.map((move) => {
-            const details = move.version_group_details[0];
+          {movesWithTypes.map((slot) => {
+            const details = slot.version_group_details[0];
 
             return (
-              <tr key={move.move.name}>
+              <tr key={slot.move.name}>
                 <td className="text-capitalize text-start">
-                  <Type name={move.type} />{move.move.name.replace("-", " ")}
+                  <TypeIcon name={slot.type} />{slot.move.name.replace("-", " ")}
                 </td>
                 <td className="text-capitalize">
                   {details.move_learn_method.name === "level-up"

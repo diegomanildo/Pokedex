@@ -1,5 +1,4 @@
 import React from "react";
-import "./MovePageButtons.css";
 
 const Button = ({ onClick, disabled, placeholder }) => (
   <button className="btn btn-secondary" onClick={onClick} disabled={disabled}>
@@ -32,7 +31,7 @@ const NextButton = ({ currentPage, setCurrentPage, totalPages }) => (
 );
 
 const MovePageButtons = ({ totalPages, currentPage, setCurrentPage }) => {
-  return totalPages <= 0 ? null : (
+  return totalPages <= 1 ? null : (
     <div className="pagination d-flex justify-content-center mt-4">
       <BackButton currentPage={currentPage} setCurrentPage={setCurrentPage} />
 

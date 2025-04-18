@@ -1,6 +1,6 @@
 import React from "react";
 import "./Stats.css";
-import FoldableCard from "../../common/FoldableCard";
+import FoldableCard from "../../../common/FoldableCard";
 
 const formatStatName = (name) => {
   switch (name) {

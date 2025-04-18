@@ -36,31 +36,56 @@ const GENERATIONS = [
   { label: "Generation 9", value: "generation-ix" },
 ];
 
+const CATEROGIES = [
+  { label: "All categories", value: "" },
+  { label: "Physical", value: "physical" },
+  { label: "Special", value: "special" },
+  { label: "Status", value: "status" },
+];
+
 const Filters = ({
+  filters,
   type,
   setType,
   generation,
   setGeneration,
+  category,
+  setCategory,
   setCurrentPage,
 }) => (
   <div className="d-flex justify-content-center gap-2 mb-3 flex-wrap">
-    <Select
-      value={type}
-      onChange={(e) => {
-        setType(e.target.value);
-        setCurrentPage(1);
-      }}
-      options={TYPES}
-    />
+    {filters.type !== undefined && (
+      <Select
+        value={type}
+        onChange={(e) => {
+          setType(e.target.value);
+          setCurrentPage(1);
+        }}
+        options={TYPES}
+      />
+    )}
 
-    <Select
-      value={generation}
-      onChange={(e) => {
-        setGeneration(e.target.value);
-        setCurrentPage(1);
-      }}
-      options={GENERATIONS}
-    />
+    {filters.generation !== undefined && (
+      <Select
+        value={generation}
+        onChange={(e) => {
+          setGeneration(e.target.value);
+          setCurrentPage(1);
+        }}
+        options={GENERATIONS}
+      />
+    )}
+
+    {filters.category !== undefined && (
+      <Select
+        value={category}
+        onChange={(e) => {
+          setCategory(e.target.value);
+          setCurrentPage(1);
+        }}
+        options={CATEROGIES}
+      />
+    )}
   </div>
 );
 

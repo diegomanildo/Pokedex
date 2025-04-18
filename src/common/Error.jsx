@@ -3,7 +3,7 @@ import React from "react";
 const Error = ({ error }) => (
   <div className="d-flex justify-content-center align-items-center vh-100">
     <div className="text-center">
-      <h2 className="error" style={{ color: "#ff6b6b" }}>
+      <h2 className="error">
         Error: {error}
       </h2>
       <small className="error h6 fw-normal">

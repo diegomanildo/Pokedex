@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from "react";
-import {
-  getEvolutionChain,
-  getPokemon,
-  getPokemonRelations,
-} from "../utils/utils";
 import { useParams } from "react-router-dom";
-import "./Pokemon.css";
-import Loading from "../common/Loading";
-import Types from "./Pokemon/Types";
+import Loading from "../../common/Loading";
 import Stats from "./Pokemon/Stats";
 import Evolutions from "./Pokemon/Evolutions";
 import Damages from "./Pokemon/Damages";
 import Header from "./Pokemon/Header";
 import Description from "./Pokemon/Description";
-import Error from "../common/Error";
+import Error from "../../common/Error";
 import Movements from "./Pokemon/Movements";
+import { getPokemon } from "../../utils/pokemon";
 
 function Pokemon() {
   const { name } = useParams();
@@ -24,9 +18,6 @@ function Pokemon() {
   const [showShiny, setShowShiny] = useState(
     localStorage.getItem("showShiny") === "true"
   );
-  const [damageRelations, setDamageRelations] = useState({});
-  const [evolutionChain, setEvolutionChain] = useState([]);
-  const [forms, setForms] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -40,27 +31,9 @@ function Pokemon() {
       try {
         const p = await getPokemon(name);
         setPokemon(p);
-
-        const relations = await getPokemonRelations(p.types);
-        setDamageRelations(relations);
-
-        const paths = await getEvolutionChain(p.species.url);
-        setEvolutionChain(paths);
-
-        const speciesRes = await fetch(p.species.url);
-        const speciesData = await speciesRes.json();
-
-        const varietyForms = await Promise.all(
-          speciesData.varieties.map(async (variety) => {
-            return await getPokemon(variety.pokemon.name);
-          })
-        );
-
-        setForms(varietyForms);
-        setPokemon(p);
       } catch (err) {
         console.error(err);
-        setError(err.message || "Unknown error");
+        setError(err.message);
       } finally {
         setIsLoading(false);
       }
@@ -80,7 +53,6 @@ function Pokemon() {
       ) : (
         <div className="d-flex flex-column align-items-center">
           <Header
-            forms={forms}
             pokemon={pokemon}
             setPokemon={setPokemon}
             showShiny={showShiny}
@@ -88,8 +60,8 @@ function Pokemon() {
           />
 
           <Description pokemon={pokemon} showShiny={showShiny} />
-          <Damages damageRelations={damageRelations} />
-          <Evolutions evolutionChain={evolutionChain} showShiny={showShiny} />
+          <Damages types={pokemon.types.map(slot => slot.type.name)} />
+          <Evolutions species={pokemon.species} showShiny={showShiny} />
           <Stats pokemonStats={pokemon.stats} />
           <Movements moves={pokemon.moves} />
         </div>

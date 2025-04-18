@@ -1,9 +1,12 @@
-import React from "react";
-import { formatEvolutionMethod } from "../../utils/utils";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Sprite from "../../common/Sprite";
+import Sprite from "../../../common/Sprite";
 import { IconArrowBigRightLinesFilled } from "@tabler/icons-react";
-import FoldableCard from "../../common/FoldableCard";
+import FoldableCard from "../../../common/FoldableCard";
+import {
+  formatEvolutionMethod,
+  getEvolutionChain,
+} from "../../../utils/pokemon";
 
 const EvolutionStage = ({ evo, showShiny }) => (
   <div className="evolution-stage d-flex flex-column align-items-center text-center">
@@ -34,8 +37,29 @@ const EvolutionLine = ({ line, showShiny }) => (
   </div>
 );
 
-const Evolutions = ({ evolutionChain, showShiny }) => {
-  return evolutionChain.length === 0 || (evolutionChain.length === 1 && evolutionChain[0].length === 1) ? null : (
+const Evolutions = ({ species, showShiny }) => {
+  const [evolutionChain, setEvolutionChain] = useState([]);
+
+  useEffect(() => {
+    const fetchEvolutionData = async () => {
+      try {
+        const chain = await getEvolutionChain(species.url);
+        setEvolutionChain(chain);
+      } catch (err) {
+        console.error("Error fetching evolution chain:", err);
+      }
+    };
+
+    if (species.url) fetchEvolutionData();
+  }, [species.url]);
+
+  if (
+    evolutionChain.length === 0 ||
+    (evolutionChain.length === 1 && evolutionChain[0].length === 1)
+  )
+    return null;
+
+  return (
     <FoldableCard title="Evolutions">
       <div className="evolution-lines d-flex flex-column align-items-center gap-4">
         {evolutionChain.map((line, i) => (
