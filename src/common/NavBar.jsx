@@ -3,7 +3,6 @@ import { routes } from "../utils/routes";
 import icon from "../../public/icon.svg";
 import "./Navbar.css";
 
-
 function Navbar() {
   return (
     <nav className="navbar">
