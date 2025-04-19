@@ -1,7 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
 import { routes } from "../utils/routes";
 import icon from "../../public/icon.svg";
-import "./NavBar.css";
+import "./Navbar.css";
+
 
 function Navbar() {
   return (
