@@ -11,18 +11,17 @@ import Move from "./layout/data/Move";
 function App() {
   return (
     <Routes>
-      {/* Search */}
       <Route element={<SearchLayout />}>
+        {/* Search */}
         <Route path={routes.main} element={<Search searchFor="pokemon" />} />
         <Route path={routes.default} element={<Search searchFor="pokemon" />} />
         <Route path={routes.searchType} element={<Search searchFor="type" />} />
         <Route path={routes.searchMove} element={<Search searchFor="move" />} />
+        {/* Data */}
+        <Route path={routes.pokemonData} element={<Pokemon />} />
+        <Route path={routes.typeData} element={<Type />} />
+        <Route path={routes.moveData} element={<Move />} />
       </Route>
-
-      {/* Data */}
-      <Route path={routes.pokemonData} element={<Pokemon />} />
-      <Route path={routes.typeData} element={<Type />} />
-      <Route path={routes.moveData} element={<Move />} />
 
       {/* 404 */}
       <Route path="*" element={<NotFound />} />

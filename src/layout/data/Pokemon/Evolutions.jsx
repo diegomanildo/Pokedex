@@ -7,10 +7,11 @@ import {
   formatEvolutionMethod,
   getEvolutionChain,
 } from "../../../utils/pokemon";
+import { routes } from "../../../utils/routes";
 
 const EvolutionStage = ({ evo, showShiny }) => (
   <div className="evolution-stage d-flex flex-column align-items-center text-center">
-    <Link to={`/pokemon/${evo.name}`}>
+    <Link to={routes.pokemonData.replace(":name", evo.name)}>
       <Sprite pokemon={evo} showShiny={showShiny} size="" />
     </Link>
     <p className="text-capitalize">{evo.name}</p>
