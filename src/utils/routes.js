@@ -1,11 +1,11 @@
 export const routes = {
-  searchPokemon: "/search/pokemon",
-  searchType: "/search/type",
-  searchMove: "/search/move",
+  searchPokemon: "/Pokedex/search/pokemon",
+  searchType: "/Pokedex/search/type",
+  searchMove: "/Pokedex/search/move",
 
-  pokemonData: "/pokemon/:name",
-  typeData: "/type/:name",
-  moveData: "/move/:name",
+  pokemonData: "/Pokedex/pokemon/:name",
+  typeData: "/Pokedex/type/:name",
+  moveData: "/Pokedex/move/:name",
   
-  default: "/search/pokemon",
+  default: "/Pokedex/search/pokemon",
 };

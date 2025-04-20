@@ -37,7 +37,7 @@ const Movements = ({ moves }) => {
   if (!moves || moves.length === 0) return null;
 
   return (
-    <FoldableCard title="Movements" opened={false} className="card p-4 mt-4 w-100 shadow">
+    <FoldableCard title="Movements" opened={true} className="card p-4 mt-4 w-100 shadow">
       <table cellPadding="4">
         <thead>
           <tr>

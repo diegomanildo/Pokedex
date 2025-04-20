@@ -13,6 +13,7 @@ function App() {
     <Routes>
       {/* Search */}
       <Route element={<SearchLayout />}>
+        <Route path={routes.main} element={<Search searchFor="pokemon" />} />
         <Route path={routes.default} element={<Search searchFor="pokemon" />} />
         <Route path={routes.searchType} element={<Search searchFor="type" />} />
         <Route path={routes.searchMove} element={<Search searchFor="move" />} />

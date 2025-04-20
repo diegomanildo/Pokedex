@@ -32,6 +32,10 @@ function Search({ searchFor }) {
 
   const [totalPages, setTotalPages] = useState(1);
 
+  useEffect(() => {
+    setTotalPages(1);
+  }, [searchFor]);
+
   // Filters
   const [type, setType] = useState(
     () => localStorage.getItem(`type:${searchFor}`) || ""
@@ -94,10 +98,10 @@ function Search({ searchFor }) {
         <SearchPokemon
           search={search}
           filters={{ type, generation }}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
           setLoading={setLoading}
           setError={setError}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
           setTotalPages={setTotalPages}
         />
       );
@@ -118,6 +122,9 @@ function Search({ searchFor }) {
           filters={{ type, category }}
           setLoading={setLoading}
           setError={setError}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          setTotalPages={setTotalPages}
         />
       );
       break;

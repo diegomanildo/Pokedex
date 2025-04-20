@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { filterPokemons, getAllPokemon, getGenerationData } from "../../utils/pokemon";
 import { Link } from "react-router-dom";
 import Sprite from "../../common/Sprite"
+import { routes } from "../../utils/routes";
 
 const SearchPokemon = ({ search, filters, setLoading, setError, currentPage, setCurrentPage, setTotalPages }) => {
   const pokemons = 1025;
@@ -71,7 +72,7 @@ const SearchPokemon = ({ search, filters, setLoading, setError, currentPage, set
       className="search-card d-flex align-items-center justify-content-center m-2"
       key={pokemon.id}
     >
-      <Link to={`/pokemon/${pokemon.id}`}>
+      <Link to={routes.pokemonData.replace(":name", pokemon.name)}>
         <Sprite pokemon={pokemon} size={100} />
       </Link>
     </div>
