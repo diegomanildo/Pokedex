@@ -4,7 +4,15 @@ import { Link } from "react-router-dom";
 import TypeIcon from "../../common/TypeIcon";
 import { routes } from "../../utils/routes";
 
-const SearchMove = ({ search, filters, setLoading, setError, currentPage, setCurrentPage, setTotalPages }) => {
+const SearchMove = ({
+  search,
+  filters,
+  setLoading,
+  setError,
+  currentPage,
+  setCurrentPage,
+  setTotalPages,
+}) => {
   const movesPerPage = 32;
   const [moves, setMoves] = useState([]);
   const [filteredMoves, setFilteredMoves] = useState([]);
@@ -38,41 +46,41 @@ const SearchMove = ({ search, filters, setLoading, setError, currentPage, setCur
 
     setFilteredMoves(filtered);
   }, [search, filters, moves]);
-  
-    const totalPages = Math.ceil(filteredMoves.length / movesPerPage);
-  
-    useEffect(() => {
-      const handleWheel = (e) => {
-        if (document.body.scrollHeight > window.innerHeight) {
-          return;
-        }
-  
-        if (e.deltaY > 0) {
-          // Scroll up
-          setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
-        } else if (e.deltaY < 0) {
-          // Scroll down
-          setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev));
-        }
-      };
-  
-      window.addEventListener("wheel", handleWheel);
-  
-      return () => {
-        window.removeEventListener("wheel", handleWheel);
-      };
-    }, [totalPages, setCurrentPage]);
-  
-    const currentMoves = filteredMoves.slice(
-      currentPage * movesPerPage - movesPerPage,
-      currentPage * movesPerPage
-    );
-  
-    setTotalPages(Math.ceil(filteredMoves.length / movesPerPage));
+
+  const totalPages = Math.ceil(filteredMoves.length / movesPerPage);
+
+  useEffect(() => {
+    const handleWheel = (e) => {
+      if (document.body.scrollHeight > window.innerHeight) {
+        return;
+      }
+
+      if (e.deltaY > 0) {
+        // Scroll up
+        setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
+      } else if (e.deltaY < 0) {
+        // Scroll down
+        setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev));
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel);
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+    };
+  }, [totalPages, setCurrentPage]);
+
+  const currentMoves = filteredMoves.slice(
+    currentPage * movesPerPage - movesPerPage,
+    currentPage * movesPerPage
+  );
+
+  setTotalPages(Math.ceil(filteredMoves.length / movesPerPage));
 
   return currentMoves.map((move) => (
     <Link
-      to={routes.moveData.replace(":/name", move.id)}
+      to={routes.moveData.replace(":name", move.name)}
       key={move.id}
       style={{ textDecoration: "none", color: "inherit" }}
     >
