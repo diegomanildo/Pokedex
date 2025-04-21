@@ -26,7 +26,7 @@ function Navbar() {
             to={routes.searchType}
             className={({ isActive }) => (isActive ? "active" : "")}
           >
-            Types
+            Type
           </NavLink>
         </li>
         <li>
@@ -36,7 +36,17 @@ function Navbar() {
               (isActive ? "active " : "")
             }
           >
-            Movements
+            Movement
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to={routes.searchItem}
+            className={({ isActive }) =>
+              (isActive ? "active " : "")
+            }
+          >
+            Item
           </NavLink>
         </li>
       </ul>

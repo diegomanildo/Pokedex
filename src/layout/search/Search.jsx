@@ -5,6 +5,7 @@ import MovePageButtons from "./MovePageButtons";
 import SearchPokemon from "./SearchPokemon";
 import SearchType from "./SearchType";
 import SearchMove from "./SearchMove";
+import SearchItem from "./SearchItem";
 
 function Search({ searchFor }) {
   const [loading, setLoading] = useState(false);
@@ -128,6 +129,18 @@ function Search({ searchFor }) {
         />
       );
       break;
+    case "item":
+      list = (
+        <SearchItem
+          search={search}
+          setLoading={setLoading}
+          setError={setError}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          setTotalPages={setTotalPages}
+        />
+      );
+      break;
     default:
       throw new Error("Invalid Search.searchFor property: " + searchFor);
   }
@@ -137,7 +150,6 @@ function Search({ searchFor }) {
   return (
     <div className="container">
       <header className="text-center m-4">
-
         <form className="form" onSubmit={(e) => e.preventDefault()}>
           <div className="d-flex justify-content-center gap-2 mb-3">
             <input
