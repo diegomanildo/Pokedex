@@ -17,16 +17,18 @@ const ShinyCheckbox = ({ showShiny, setShowShiny }) => (
   </div>
 );
 
-const Header = ({ pokemon, setPokemon, showShiny, setShowShiny  }) => {
-  return (
-    <header className="container">
-      <div className="col-12 d-flex justify-content-between align-items-center mt-2 flex-wrap">
-        <BackButton />
-        <Forms species={pokemon.species} pokemon={pokemon} setPokemon={setPokemon} />
-        <ShinyCheckbox showShiny={showShiny} setShowShiny={setShowShiny} />
-      </div>
-    </header>
-  );
-};
+const Header = ({ pokemon, setPokemon, showShiny, setShowShiny }) => (
+  <header className="container">
+    <div className="col-12 d-flex justify-content-between align-items-center mt-2 flex-wrap">
+      <BackButton />
+      <Forms
+        species={pokemon.species}
+        pokemon={pokemon}
+        setPokemon={setPokemon}
+      />
+      <ShinyCheckbox showShiny={showShiny} setShowShiny={setShowShiny} />
+    </div>
+  </header>
+);
 
 export default Header;

@@ -5,6 +5,8 @@ import Error from "../../common/Error";
 import Header from "./Types/Header";
 import Damages from "./Pokemon/Damages";
 import { getType } from "../../utils/types";
+import Generation from "./Types/Generation";
+import Pokemons from "./Types/Pokemons";
 
 const Type = () => {
   const { name } = useParams();
@@ -41,6 +43,8 @@ const Type = () => {
     <div className="container py-4">
       <Header name={type.name} />
       <Damages types={[type.name]} />
+      <Generation addedIn={type.generation.name} />
+      <Pokemons pokemonsData={type.pokemon} />
     </div>
   );
 };

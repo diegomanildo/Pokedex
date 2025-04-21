@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getAllTypes } from "../../utils/types";
 import TypeIcon from "../../common/TypeIcon";
+import { routes } from "../../utils/routes";
+import { Link } from "react-router-dom";
 
 const SearchType = ({ search, setLoading, setError }) => {
   const [types, setTypes] = useState([]);
@@ -25,12 +27,19 @@ const SearchType = ({ search, setLoading, setError }) => {
   }, [search, types]);
 
   return filteredTypes.map((type) => (
-    <div
-      className="search-card d-flex align-items-center justify-content-center m-2"
-      key={type.name}
-    >
-      <TypeIcon key={type.name} name={type.name} width="70px" />
-    </div>
+    <Link to={routes.typeData.replace(":name", type.name)}>
+      <div
+        className="search-card d-flex align-items-center justify-content-center m-2"
+        key={type.name}
+      >
+        <TypeIcon
+          key={type.name}
+          name={type.name}
+          hasLink={false}
+          width="70px"
+        />
+      </div>
+    </Link>
   ));
 };
 

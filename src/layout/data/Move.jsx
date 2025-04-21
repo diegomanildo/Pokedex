@@ -5,6 +5,9 @@ import Error from "../../common/Error";
 import { getMove } from "../../utils/moves";
 import Header from "./Moves/Header";
 import Type from "./Moves/Type";
+import Description from "./Moves/Description";
+import Information from "./Moves/Information";
+import CanLearn from "./Moves/CanLearn";
 
 function Move() {
   const { name } = useParams();
@@ -38,12 +41,13 @@ function Move() {
     return <Loading />;
   }
 
-  console.log(move);
-
   return (
     <div className="move container py-4">
       <Header move={move} />
+      <Description move={move} />
       <Type move={move} />
+      <Information move={move} />
+      <CanLearn move={move} />
     </div>
   );
 }

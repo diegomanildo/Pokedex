@@ -9,6 +9,8 @@ import Description from "./Pokemon/Description";
 import Error from "../../common/Error";
 import Movements from "./Pokemon/Movements";
 import { getPokemon } from "../../utils/pokemon";
+import Generation from "./Types/Generation";
+import Abilities from "./Pokemon/Abilities";
 
 function Pokemon() {
   const { name } = useParams();
@@ -61,6 +63,7 @@ function Pokemon() {
 
           <Description pokemon={pokemon} showShiny={showShiny} />
           <Damages types={pokemon.types.map(slot => slot.type.name)} />
+          <Abilities abilities={pokemon.abilities} />
           <Evolutions species={pokemon.species} showShiny={showShiny} />
           <Stats pokemonStats={pokemon.stats} />
           <Movements moves={pokemon.moves} />
