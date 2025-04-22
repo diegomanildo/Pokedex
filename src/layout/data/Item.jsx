@@ -38,7 +38,7 @@ const Item = () => {
   }
 
   return (
-    <div>
+    <div className="item container py-4">
       <Header item={item} />
 
       <div className="card p-4 mt-3 w-100 text-center shadow">

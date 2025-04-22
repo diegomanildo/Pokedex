@@ -6,13 +6,13 @@ import "./Navbar.css";
 function Navbar() {
   return (
     <nav className="navbar">
-      <div className="navbar__logo">
+      <div className="navbar-logo">
         <Link to={routes.default}>
           <img className="m-2" src={icon} width={40} />
           Pokedex
         </Link>
       </div>
-      <ul className="navbar__links">
+      <ul className="navbar-links">
         <li>
           <NavLink
             to={routes.default}
