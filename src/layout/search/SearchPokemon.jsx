@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import Sprite from "../../common/Sprite"
 import { routes } from "../../utils/routes";
 
+const POKEMONS = 1025;
+const POKEMONS_PER_PAGE = 32;
+
 const SearchPokemon = ({ search, filters, setLoading, setError, currentPage, setCurrentPage, setTotalPages }) => {
-  const pokemons = 1025;
-  const pokemonsPerPage = 32;
 
   const [allPokemon, setAllPokemon] = useState([]);
   const [filtered, setFiltered] = useState([]);
@@ -15,7 +16,7 @@ const SearchPokemon = ({ search, filters, setLoading, setError, currentPage, set
   useEffect(() => {
     try {
       setLoading(true);
-      getAllPokemon(pokemons).then(setAllPokemon);
+      getAllPokemon(POKEMONS).then(setAllPokemon);
       getGenerationData().then(setGenerationData);
     } catch (e) {
       console.error(e);
@@ -36,7 +37,7 @@ const SearchPokemon = ({ search, filters, setLoading, setError, currentPage, set
     setFiltered(filteredList);
   }, [allPokemon, search, filters, generationData]);
 
-  const totalPages = Math.ceil(filtered.length / pokemonsPerPage);
+  const totalPages = Math.ceil(filtered.length / POKEMONS_PER_PAGE);
 
   useEffect(() => {
     const handleWheel = (e) => {
@@ -61,11 +62,11 @@ const SearchPokemon = ({ search, filters, setLoading, setError, currentPage, set
   }, [totalPages, setCurrentPage]);
 
   const currentPokemons = filtered.slice(
-    currentPage * pokemonsPerPage - pokemonsPerPage,
-    currentPage * pokemonsPerPage
+    currentPage * POKEMONS_PER_PAGE - POKEMONS_PER_PAGE,
+    currentPage * POKEMONS_PER_PAGE
   );
 
-  setTotalPages(Math.ceil(filtered.length / pokemonsPerPage));
+  setTotalPages(Math.ceil(filtered.length / POKEMONS_PER_PAGE));
 
   return currentPokemons.map((pokemon) => (
     <div

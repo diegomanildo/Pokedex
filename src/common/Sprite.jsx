@@ -1,14 +1,23 @@
 import React from "react";
 
-const Sprite = React.memo(({ pokemon, showShiny, size }) => (
-  <img
-    className="lazy"
-    src={
-      showShiny ? pokemon.sprites.front_shiny : pokemon.sprites.front_default
-    }
-    alt={`${pokemon.name} sprite`}
-    width={size}
-  />
-));
+const spriteType = "official-artwork";
 
+const Sprite = React.memo(({ pokemon, showShiny, size }) => {
+  const sprite = spriteType
+    ? showShiny
+      ? pokemon.sprites.other[spriteType].front_shiny
+      : pokemon.sprites.other[spriteType].front_default
+    : showShiny
+    ? pokemon.sprites.front_shiny
+    : pokemon.sprites.front_default;
+
+  return (
+    <img
+      className="lazy"
+      src={sprite}
+      alt={`${pokemon.name} sprite`}
+      width={size}
+    />
+  );
+});
 export default Sprite;
