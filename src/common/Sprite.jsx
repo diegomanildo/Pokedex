@@ -1,6 +1,6 @@
 import React from "react";
 
-const spriteType = "official-artwork";
+const spriteType = null;
 
 const Sprite = React.memo(({ pokemon, showShiny, size }) => {
   const sprite = spriteType
