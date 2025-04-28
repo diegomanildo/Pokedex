@@ -8,8 +8,21 @@ import { routes } from "./utils/routes";
 import SearchLayout from "./common/SearchLayout";
 import Move from "./layout/data/Move";
 import Item from "./layout/data/Item";
+import { useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    const clearLocalStorage = () => {
+      localStorage.clear();
+    };
+
+    window.addEventListener('beforeunload', clearLocalStorage);
+
+    return () => {
+      window.removeEventListener('beforeunload', clearLocalStorage);
+    };
+  }, []);
+  
   return (
     <Routes>
       <Route element={<SearchLayout />}>
